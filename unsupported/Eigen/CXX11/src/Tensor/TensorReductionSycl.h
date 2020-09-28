@@ -100,7 +100,7 @@ struct SecondStepFullReducer {
     CoeffReturnType accumulator = *aInPtr;
 
     scratchptr[localid] = op.finalize(accumulator);
-#pragma unroll 8
+
     for (Index offset = itemID.get_local_range(0) / 2; offset > 0; offset /= 2) {
       itemID.barrier(cl::sycl::access::fence_space::local_space);
       if (localid < offset) {
@@ -154,7 +154,7 @@ class FullReductionKernelFunctor {
     Index start = Evaluator::PacketSize * globalid;
     // vectorizable parts
     PacketReturnType packetAccumulator = op.template initializePacket<PacketReturnType>();
-#pragma unroll(8 / Evaluator::PacketSize)
+
     for (Index i = start; i < VectorizedRange; i += step) {
       op.template reducePacket<PacketReturnType>(evaluator.impl().template packet<Unaligned>(i), &packetAccumulator);
     }
