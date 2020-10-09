@@ -1286,14 +1286,14 @@ bool all(T t, Ts ... ts){ return t && all(ts...); }
 #endif
 
 // Wrapping #pragma unroll in a macro since it is required for SYCL
-#if defined(SYCL_DEVICE_ONLY)
-  #if defined(_MSC_VER)
-    #define EIGEN_UNROLL_LOOP __pragma(unroll)
-  #else
-    #define EIGEN_UNROLL_LOOP _Pragma("unroll")
-  #endif
-#else
+// #if defined(SYCL_DEVICE_ONLY)
+//   #if defined(_MSC_VER)
+//     #define EIGEN_UNROLL_LOOP __pragma(unroll)
+//   #else
+//     #define EIGEN_UNROLL_LOOP _Pragma("unroll")
+//   #endif
+// #else
   #define EIGEN_UNROLL_LOOP
-#endif
+// #endif
 
 #endif // EIGEN_MACROS_H
